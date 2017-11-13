@@ -44,8 +44,16 @@ body=""
 siemens=True
 if type(getCB()) == type("a") and ("\r\n" not in getCB() or len(getCB().split("\r\n")[1])==0):
     i=getCB().replace(" ","")
-    with open("\\\\serveurag60\\UTILISATEURS\\fichierscommun\\!!!SOFT\\python\\admall\\refs.db", "r") as subor:
-        data=subor.read().split("\n")
+    try:
+        with open("\\\\serveurag60\\UTILISATEURS\\fichierscommun\\!!!SOFT\\python\\admall\\refs.db", "r") as subor:
+            data=subor.read().split("\n")
+    except(IOError):
+        try:
+            with open("refs.db", "r") as subor:
+                data=subor.read().split("\n")
+        except(IOError):
+            data=""
+
     for riadok in data:
         if i[0:3].upper()==riadok[0:3]:
             #print len(riadok[4:].replace("%s",i[3:]))
