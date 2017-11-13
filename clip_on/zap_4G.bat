@@ -1,0 +1,1 @@
+netsh interface set interface name="Lok lne pripojenie 3" admin=enabled

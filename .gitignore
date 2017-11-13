@@ -97,3 +97,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+#samozrejme .exe
+.exe
+
+*.db
+*.exe
