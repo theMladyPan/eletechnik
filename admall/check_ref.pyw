@@ -44,14 +44,14 @@ body=""
 siemens=True
 if type(getCB()) == type("a") and ("\r\n" not in getCB() or len(getCB().split("\r\n")[1])==0):
     i=getCB().replace(" ","")
-    with open("\\\\servag60\\UTILISATEURS\\fichierscommun\\!!!SOFT\\python\\admall\\refs.db", "r") as subor:
+    with open("\\\\serveurag60\\UTILISATEURS\\fichierscommun\\!!!SOFT\\python\\admall\\refs.db", "r") as subor:
         data=subor.read().split("\n")
     for riadok in data:
         if i[0:3].upper()==riadok[0:3]:
             #print len(riadok[4:].replace("%s",i[3:]))
             webbrowser.open(riadok.split(" ")[1].replace("%s",i.replace("-","").replace(riadok.split(" ")[0],"")))
             siemens=False
-   
+
     if siemens:
         i=getCB().replace(" ","").replace("-","").replace("\n","").replace("\r","")
         setCB(i)
@@ -76,4 +76,3 @@ elif type(getCB()) == type("a"):
         sleep(5)
 else:
     webbrowser.open("v clipboarde sa nenachadza ziadna referencia")
-

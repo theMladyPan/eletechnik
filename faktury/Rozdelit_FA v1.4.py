@@ -6,7 +6,7 @@ import os, codecs, time, tkFileDialog
 for i in os.listdir("faktury"):
     os.remove("faktury\\"+i)
 
-subory=os.listdir("\\\SERVAG60\\gesco\\dbase\\BL\\facturation")
+subory=os.listdir("\\\SERVEURAG60\\gesco\\dbase\\BL\\facturation")
 pdfka=[]
 posledna=0
 
@@ -18,12 +18,12 @@ for i in subory:
             cFA=i.split("_")[2]
 
 FA= "factures_060_%s_ORIGINALES.pdf"%cFA
-    
+
 #okno=Tk()
 #input1 = PdfFileReader(open(tkFileDialog.askopenfilename(), "rb"))
 #okno.destroy()
 
-input1 = PdfFileReader(open("\\\SERVAG60\\gesco\\dbase\\BL\\facturation\\"+FA, "rb"))
+input1 = PdfFileReader(open("\\\SERVEURAG60\\gesco\\dbase\\BL\\facturation\\"+FA, "rb"))
 
 pages=input1.getNumPages()
 pocet_stran_fakturacie=pages
@@ -35,14 +35,14 @@ for i in range(pages):
 
 with open("klienti.txt","rb") as subor:
     klienti=subor.read().split("\n")
-    
+
 pocet_klientov=len(klienti)
 
-#pre kazdeho klienta 
+#pre kazdeho klienta
 for klient in klienti:
     os.system("cls")
-    print u"Vitajte!\n(c) Rubint.sk 2016\n\nExtrahujem faktúry z %s: %s\n\n[%s%s] %d/%d strán ostáva.\n\n" % (FA, unicode(klient, "ascii", "ignore").encode("ascii"), "#"*int(50*(klienti.index(klient)/float(pocet_klientov)))," "*int(50*((pocet_klientov-klienti.index(klient))/float(pocet_klientov))),pocet_stran_fakturacie - pocet_stran_rozhodenych, pocet_stran_fakturacie)
-                                        
+    print u"Vitajte!\n(c) Rubint.sk 2016\n\nExtrahujem faktï¿½ry z %s: %s\n\n[%s%s] %d/%d strï¿½n ostï¿½va.\n\n" % (FA, unicode(klient, "ascii", "ignore").encode("ascii"), "#"*int(50*(klienti.index(klient)/float(pocet_klientov)))," "*int(50*((pocet_klientov-klienti.index(klient))/float(pocet_klientov))),pocet_stran_fakturacie - pocet_stran_rozhodenych, pocet_stran_fakturacie)
+
 
     output = PdfFileWriter()
     su_faktury=False
@@ -52,7 +52,7 @@ for klient in klienti:
 
     while strany:
         page=strany.pop()
-        
+
         if unicode(klient,"cp1250").replace("\r","") in page.extractText():
             text= page.extractText()
             if "TVA Intra" in text:
@@ -62,7 +62,7 @@ for klient in klienti:
             su_faktury = True
             output.addPage(page)
             pocet_stran_rozhodenych+=1
-            
+
         else:
             zvysok.append(page)
     if su_faktury:
@@ -79,7 +79,7 @@ mnozstvo=len(strany)
 
 while strany:
     os.system("cls")
-    print u"\n\n Hotovo, extrahujem faktury na vytlaèenie:\n\n[%s%s] %d/%d strán ostáva.\n\n"%("#"*int(50*(len(strany)/float(mnozstvo)))," "*int(50*((mnozstvo-len(strany))/float(mnozstvo))),pocet_stran_fakturacie - pocet_stran_rozhodenych, pocet_stran_fakturacie)
+    print u"\n\n Hotovo, extrahujem faktury na vytlaï¿½enie:\n\n[%s%s] %d/%d strï¿½n ostï¿½va.\n\n"%("#"*int(50*(len(strany)/float(mnozstvo)))," "*int(50*((mnozstvo-len(strany))/float(mnozstvo))),pocet_stran_fakturacie - pocet_stran_rozhodenych, pocet_stran_fakturacie)
     page=strany.pop()
     output.addPage(page)
     pocet_stran_rozhodenych+=1
@@ -88,16 +88,16 @@ output.write(outputStream)
 outputStream.close()
 
 
-#najdi faktury tzv. Obj. pride        
+#najdi faktury tzv. Obj. pride
 
 output = PdfFileWriter()
 su_faktury=False
-    
+
 for i in range(pages):
     os.system("cls")
-    print u"\n\n Hotovo, extrahujem faktury bez objednavky:\n\n[%s%s] %d/%d strán ostáva.\n\n"%("#"*int(50*(i/float(pages)))," "*int(50*((pages-i)/float(pages))),pages - i, pages )
+    print u"\n\n Hotovo, extrahujem faktury bez objednavky:\n\n[%s%s] %d/%d strï¿½n ostï¿½va.\n\n"%("#"*int(50*(i/float(pages)))," "*int(50*((pages-i)/float(pages))),pages - i, pages )
     page=input1.getPage(i)
-    
+
     if unicode("Obj. pride","cp1250").replace("\r","") in page.extractText():
         text= page.extractText()
         if "TVA Intra" in text:
@@ -117,8 +117,8 @@ if su_faktury:
 os.system("cls")
 print "Hotovo!"
 if pocet_stran_rozhodenych == pocet_stran_fakturacie:
-    print u"Krížová kontrola prebehla úspešne, strán dokopy=%d"%pocet_stran_fakturacie
+    print u"Krï¿½ï¿½ovï¿½ kontrola prebehla ï¿½speï¿½ne, strï¿½n dokopy=%d"%pocet_stran_fakturacie
 else:
-    print u"POZOR! Krížová kontrola neprebehla úspešne, poèet strán sa líši!"
-    
+    print u"POZOR! Krï¿½ï¿½ovï¿½ kontrola neprebehla ï¿½speï¿½ne, poï¿½et strï¿½n sa lï¿½ï¿½i!"
+
 raw_input("Enter...")

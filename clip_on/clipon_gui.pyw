@@ -49,7 +49,7 @@ class Main:
         self.stary_klip=paste()
         self.dokumentacia=IntVar()
 
-        with open("\\\\servag60\\UTILISATEURS\\fichierscommun\\!!!SOFT\\python\\admall\\refs.db", "r") as subor:
+        with open("\\\\serveurag60\\UTILISATEURS\\fichierscommun\\!!!SOFT\\python\\admall\\refs.db", "r") as subor:
             self.referencie=subor.read().split("\n")
 
         try:
@@ -62,7 +62,7 @@ class Main:
                    "navrat kurzora":"\r","lomitko":"/",
                    "tabulator":"	", "ciarka":",",
                    "bodka":"."}
-        
+
         for i in range(len(self.opts.keys())):
                 self.vars.append(IntVar())
 
@@ -73,16 +73,16 @@ class Main:
                     self.vars[i].set(int(data[i]))
         except:
             pass
-        
-        Label(self.main, text=u"Odstráò:").grid(row=0, column=0)
+
+        Label(self.main, text=u"Odstrï¿½ï¿½:").grid(row=0, column=0)
         self.checkboxes=[]
-        
+
         for i in range(len(self.opts.keys())):
             self.checkboxes.append(Checkbutton(self.main, variable=self.vars[i],onvalue=1, offvalue=0))
             self.checkboxes[i].grid(column=0, row=i+1)
             Label(self.main, text=self.opts.keys()[i])\
                              .grid(row=i+1, column=1, sticky="W")
-        
+
 
         self.nahrada=Frame(self.main)
         self.nahrada.grid(row=18, columnspan=3, sticky="WENS")
@@ -91,10 +91,10 @@ class Main:
         self.co.grid(column=0, row=0)
 
         Label(self.nahrada, text="=>").grid(column=1, row=0, sticky="WENS")
-        
+
         self.cim=Entry(self.nahrada, width=15)
         self.cim.grid(column=2, row=0, sticky="WENS")
-        
+
         Label(self.nahrada, text="Prefix").grid(row=1, column=0)
         self.prefix=Entry(self.nahrada, width=15)
         self.prefix.grid(row=1, column=2, sticky="W")
@@ -103,7 +103,7 @@ class Main:
             with open("prefix.defaults","r") as subor:
                 self.prefix.insert(0,subor.read())
         except: pass
-        
+
         Checkbutton(self.main, variable=self.filtruj, onvalue=1, offvalue=0).grid(column=0, row=20)
         Label(self.main, text="Filtruj").grid(column=1,row=20, columnspan=2, sticky="W")
         Checkbutton(self.main, variable=self.nahod, onvalue=1, offvalue=0).grid(column=0, row=21)
@@ -126,7 +126,7 @@ class Main:
             self.filtruj.set(0)
         else:
             self.filtruj.set(1)
-        
+
     def scan(self):
         while self.main:
             if self.filtruj.get():
@@ -136,7 +136,7 @@ class Main:
                         retazec=retazec+ self.opts[self.opts.keys()[i]]
                 klip=paste()
                 try: klip.replace("","")
-                except: continue  
+                except: continue
                 for i in retazec:
                     klip=klip.replace(i,"")
                 klip=klip.replace(self.co.get(),self.cim.get())
@@ -153,7 +153,7 @@ class Main:
                         self.pridaj_do_cde()
                     if self.dokumentacia.get():
                         self.zamen_dokumentaciou()
-                        
+
                 self.stary_klip=klip
             sleep(0.2)
 
@@ -162,7 +162,7 @@ class Main:
         send("{ESC}{INSERT}1{ENTER}")
         send("^v")
         send("{ENTER}"*9)
-        
+
     def pridaj_do_cde(self):
         os.system("C:\gesco5\\client_cde.exe")
         send("{ESC}{INSERT}1{ENTER}")
@@ -177,23 +177,23 @@ class Main:
             send("{ENTER}"*11)
             send(nakup)
             send("{ENTER}"*9)
-            
+
         else:
             send("{ENTER}"*9)
-                
+
     def on_destroy(self):
         with open("vars.defaults","w") as subor:
             data=""
             for i in range(len(self.vars)):
                 data+=str(self.vars[i].get())
             subor.write(data)
-            
+
         with open("filtruj.defaults","w") as subor:
                 subor.write(str(self.filtruj.get()))
 
         with open("prefix.defaults","w") as subor:
                 subor.write(str(self.prefix.get()))
-        
+
         self.main.destroy()
         self.main=False
 
